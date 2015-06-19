@@ -30,7 +30,7 @@ module.exports = (env) ->
         unit: 'lux'
         acronym: 'lx'
 
-    template: "lightintensity"	  
+    template: "temperature"	  
 	  
   class BH1750Sensor extends LightIntensitySensor
     _lightintensity: null

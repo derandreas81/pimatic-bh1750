@@ -24,21 +24,21 @@ module.exports = (env) ->
   class LightIntensitySensor extends env.devices.Sensor
 
     attributes:
-      temperature:
+      lightintensity:
         description: "The measured light intensity"
         type: t.number
         unit: 'lux'
         acronym: 'lx'
 
-    template: "temperature"	  
+    template: "lightintensity"	  
 	  
   class BH1750Sensor extends LightIntensitySensor
-    _temperature: null
+    _lightintensity: null
 
     constructor: (@config, lastState) ->
       @id = config.id
       @name = config.name
-      @_temperature = lastState?.temperature?.value
+      @_lightintensity = lastState?.lightintensity?.value
       BH1750 = require 'bh1750'
       @sensor = new BH1750({
         address: config.address,
@@ -55,9 +55,9 @@ module.exports = (env) ->
 
     requestValue: ->
       @sensor.readLight( (value) =>
-        #if value isnt @_temperature
-          @_temperature = value
-          @emit 'temperature', value
+        #if value isnt @_lightintensity
+          @_lightintensity = value
+          @emit 'lightintensity', value
         #else
         #  env.logger.debug("Sensor value (#{value}) did not change.")
       #).catch( (error) =>
@@ -67,7 +67,7 @@ module.exports = (env) ->
       #  env.logger.debug(error.stack)
       )
 
-    getTemperature: -> Promise.resolve(@_temperature)
+    getLightintensity: -> Promise.resolve(@_lightintensity)
 
   # Create a instance and return it to the framework
   myPlugin = new BH1750Plugin

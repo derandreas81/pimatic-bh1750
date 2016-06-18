@@ -36,23 +36,25 @@ module.exports = (env) ->
     _lightintensity: null
 
     constructor: (@config, lastState) ->
-      @id = config.id
-      @name = config.name
+      @id = @config.id
+      @name = @config.name
       @_lightintensity = lastState?.lightintensity?.value
       BH1750 = require 'bh1750'
       @sensor = new BH1750({
-        address: config.address,
-        device: config.device,
+        address: @config.address,
+        device: @config.device,
         command: 0x10,
         length: 2
       });
       Promise.promisifyAll(@sensor)
-
       super()
-
+      
       @requestValue()
       setInterval( ( => @requestValue() ), @config.interval)
 
+      destroy: () ->
+      	clearInterval @requestValue
+      super()
     requestValue: ->
       @sensor.readLight( (value) =>
         #if value isnt @_lightintensity

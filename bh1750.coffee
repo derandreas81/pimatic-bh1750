@@ -54,7 +54,7 @@ module.exports = (env) ->
 
       destroy: () ->
       	clearInterval @requestValueIntervalId if @requestValueIntervalId?
-      super()
+        super()
       
     requestValue: ->
       @sensor.readLight( (value) =>

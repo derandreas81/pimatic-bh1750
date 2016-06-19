@@ -8,7 +8,7 @@
     "bh1750-config-schema.coffee",
     "device-config-schema.coffee"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "http://circuitdb.com",
   "private": false,
   "repository": {
@@ -25,7 +25,7 @@
     "bh1750": "0.0.2"
   },
   "peerDependencies": {
-    "pimatic": "0.8.*"
+    "pimatic": "0.9.*"
   },
   "engines": {
     "node": ">0.8.x",

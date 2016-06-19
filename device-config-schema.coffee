@@ -10,7 +10,7 @@ module.exports = {
         type: "string"
       address:
         description: "the address of the sensor"
-        type: "string"
+        type: "integer"
       interval:
         interval: "Interval in ms so read the sensor"
         type: "integer"

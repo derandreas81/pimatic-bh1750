@@ -16,7 +16,7 @@ module.exports = (env) ->
 
       @framework.deviceManager.registerDeviceClass("BH1750Sensor", {
         configDef: deviceConfigDef.BH1750Sensor, 
-        createCallback: (config, lastState) => 
+        createCallback: (@config, lastState) => 
           device = new BH1750Sensor(config, lastState)
           return device
       })
@@ -36,23 +36,26 @@ module.exports = (env) ->
     _lightintensity: null
 
     constructor: (@config, lastState) ->
-      @id = config.id
-      @name = config.name
+      @id = @config.id
+      @name = @config.name
       @_lightintensity = lastState?.lightintensity?.value
       BH1750 = require 'bh1750'
       @sensor = new BH1750({
-        address: config.address,
-        device: config.device,
+        address: @config.address,
+        device: @config.device,
         command: 0x10,
         length: 2
       });
       Promise.promisifyAll(@sensor)
-
       super()
-
+      
       @requestValue()
-      setInterval( ( => @requestValue() ), @config.interval)
+      @requestValueIntervalId = setInterval( ( => @requestValue() ), @config.interval)
 
+      destroy: () ->
+      	clearInterval @requestValueIntervalId if @requestValueIntervalId?
+      super()
+      
     requestValue: ->
       @sensor.readLight( (value) =>
         #if value isnt @_lightintensity

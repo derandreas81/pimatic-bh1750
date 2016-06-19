@@ -17,7 +17,7 @@ module.exports = (env) ->
       @framework.deviceManager.registerDeviceClass("BH1750Sensor", {
         configDef: deviceConfigDef.BH1750Sensor, 
         createCallback: (@config, lastState) => 
-          device = new BH1750Sensor(config, lastState)
+          device = new BH1750Sensor(@config, lastState)
           return device
       })
 	  

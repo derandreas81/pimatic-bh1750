@@ -16,7 +16,7 @@ module.exports = (env) ->
 
       @framework.deviceManager.registerDeviceClass("BH1750Sensor", {
         configDef: deviceConfigDef.BH1750Sensor, 
-        createCallback: (config, lastState) => 
+        createCallback: (@config, lastState) => 
           device = new BH1750Sensor(config, lastState)
           return device
       })
@@ -50,11 +50,12 @@ module.exports = (env) ->
       super()
       
       @requestValue()
-      setInterval( ( => @requestValue() ), @config.interval)
+      @requestValueIntervallId = setInterval( ( => @requestValue() ), @config.interval)
 
       destroy: () ->
-      	clearInterval @requestValue
+      	clearInterval @requestValueIntervallId if @requestValueIntervallId?
       super()
+      
     requestValue: ->
       @sensor.readLight( (value) =>
         #if value isnt @_lightintensity

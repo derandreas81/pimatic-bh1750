@@ -6,14 +6,16 @@ module.exports = {
     extensions: ["xLink"]
     properties:
       device:
-        description: "device file to use, for example /dev/i2c-0"
+        description: "device file to use, for example /dev/i2c-1"
         type: "string"
+        default:"/dev/i2c-1"
       address:
-        description: "the address of the sensor"
+        description: "the address of the sensor 35 for 0x23"
         type: "integer"
+        default: "35"
       interval:
         interval: "Interval in ms so read the sensor"
         type: "integer"
-        default: 10000
+        default: "10000"
   }
 }
